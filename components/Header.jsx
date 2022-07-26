@@ -1,5 +1,13 @@
+import { ConnectButton } from "web3uikit"
+
+
 const Header = () => {
-    return(<div>Hi from header</div>)
+    return(
+        <div>
+            Decentralized Lottery
+            <ConnectButton moralisAuth={false} />
+        </div>
+    )
 }
 export default Header
 

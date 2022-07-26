@@ -3,7 +3,7 @@ import { useEffect } from "react"
 
 const ManualHeader = () => {
     //
-    const {enableWeb3, account, isWeb3Enabled, Moralis, deactivateWeb3} = useMoralis() //react hook
+    const {enableWeb3, account, isWeb3Enabled, Moralis, deactivateWeb3, isWeb3EnableLoading} = useMoralis() //react hook
     useEffect(() => {
         if (isWeb3Enabled) return
         if (typeof window != "undefined"){
@@ -15,7 +15,7 @@ const ManualHeader = () => {
         console.log(isWeb3Enabled)
     }, [isWeb3Enabled])
 
-    useEffect(() => {
+    useEffect(() => {// to check if any account change
         Moralis.onAccountChanged((account) => {
             console.log(`Account changed to ${account}`)
             if (account == null) {
@@ -32,14 +32,17 @@ const ManualHeader = () => {
             Connected to {account.slice(0,6)}...{account.length - 4}
             </div>
             ) : (
-            <button onClick={async () => {
-                await enableWeb3()
-                if (typeof window != "undefined"){
-                    window.localStorage.getItem("connected", "injected")
-                }
-                }}>
+            <button 
+                onClick={async () => {
+                    await enableWeb3()
+                    if (typeof window != "undefined"){
+                        window.localStorage.getItem("connected", "injected")
+                    }
+                    }}
+                disabled={isWeb3EnableLoading}
+            >
                 Connect
-                </button>)}
+            </button>)}
         </div>)
 }
 export default ManualHeader
