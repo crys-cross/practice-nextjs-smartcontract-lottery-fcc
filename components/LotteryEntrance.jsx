@@ -1,10 +1,11 @@
 // have function to enter Lottery
+// TODO Challenge: update recentWinner by event trigger
 import { useWeb3Contract } from "react-moralis"
 import { abi, contractAddresses } from "../constants"
 import { useMoralis } from "react-moralis"
 import { useEffect, useState } from "react"
 import { ethers } from "ethers"
-import { useNotification } from "web3uikit"
+import { useNotification } from "web3uikit" //component library(the other is css library)
 
 const LotteryEntrance = () => {
     const { chainId: chainIdHex, isWeb3Enabled } = useMoralis()
@@ -64,7 +65,7 @@ const LotteryEntrance = () => {
     }, [isWeb3Enabled])
 
     const handleSuccess = async (tx) => {
-        await tx.wait(1)
+        await tx.wait(1) //this is the piece to wait for transaction to be confirmed
         handleNewNotification(tx)
         updateUI()
     }
@@ -88,7 +89,7 @@ const LotteryEntrance = () => {
                         onclick={async () => {
                             await enterRaffle({
                                 //onComplete:
-                                onSuccess: handleSuccess,
+                                onSuccess: handleSuccess, //only checks to see if transaction is sent to metamask
                                 onError: (error) => {
                                     console.log(error)
                                 },
